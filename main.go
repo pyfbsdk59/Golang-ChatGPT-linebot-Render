@@ -70,7 +70,7 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(resp.Choices[0].Text)).Do(); err != nil {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(chatgpt())).Do(); err != nil {
 						log.Print(err)
 					}
 				case *linebot.StickerMessage:
