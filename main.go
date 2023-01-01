@@ -25,14 +25,13 @@ import (
 	gogpt "github.com/sashabaranov/go-gpt3"
 )
 
-func chatgpt() string {
+func getChatGPTresponse(ctx context.Context, question string) string {
 	c := gogpt.NewClient(os.Getenv("OPENAI_TOKEN"))
-	ctx := context.Background()
 
 	req := gogpt.CompletionRequest{
 		Model:       "text-davinci-003",
 		MaxTokens:   100,
-		Prompt:      "Lorem ipsum",
+		Prompt:      question,
 		Temperature: 0,
 	}
 	resp, err := c.CreateCompletion(ctx, req)
@@ -47,7 +46,7 @@ func chatgpt() string {
 }
 
 func main() {
-
+	ctx := context.Background()
 	bot, err := linebot.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
@@ -71,7 +70,7 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(chatgpt())).Do(); err != nil {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(getChatGPTresponse(ctx, message.Text))).Do(); err != nil {
 						log.Print(err)
 					}
 				case *linebot.StickerMessage:
