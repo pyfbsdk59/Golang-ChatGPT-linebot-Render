@@ -30,9 +30,10 @@ func chatgpt() string {
 	ctx := context.Background()
 
 	req := gogpt.CompletionRequest{
-		Model:     "ada",
-		MaxTokens: 100,
-		Prompt:    "Lorem ipsum",
+		Model:       "text-davinci-003",
+		MaxTokens:   100,
+		Prompt:      "Lorem ipsum",
+		Temperature: 0,
 	}
 	resp, err := c.CreateCompletion(ctx, req)
 	if err != nil {
