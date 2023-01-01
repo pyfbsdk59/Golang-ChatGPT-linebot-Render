@@ -1,2 +1,4 @@
 github.com/line/line-bot-sdk-go/v7 v7.18.0 h1:ogrOioYKnCuyDlbNAuFb7hGdv1KGkluKWUcZx/Uocds=
 github.com/line/line-bot-sdk-go/v7 v7.18.0/go.mod h1:2CXH5xBgADszymGNRRUiUqBQ/0G6r2nx3BviBYtnB3U=
+github.com/sashabaranov/go-gpt3 v0.0.0-20221216095610-1c20931ead68 h1:0g+W77usi8tTHViKpQQr7MHphLsI32zX8HtOeigDGKo=
+github.com/sashabaranov/go-gpt3 v0.0.0-20221216095610-1c20931ead68/go.mod h1:BIZdbwdzxZbCrcKGMGH6u2eyGe1xFuX9Anmh3tCP8lQ=

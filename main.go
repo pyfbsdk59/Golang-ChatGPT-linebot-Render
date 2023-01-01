@@ -15,15 +15,37 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
+	gogpt "github.com/sashabaranov/go-gpt3"
 )
 
+func chatgpt() string {
+	c := gogpt.NewClient(os.Getenv("OPENAI_TOKEN"))
+	ctx := context.Background()
+
+	req := gogpt.CompletionRequest{
+		Model:     "ada",
+		MaxTokens: 100,
+		Prompt:    "Lorem ipsum",
+	}
+	resp, err := c.CreateCompletion(ctx, req)
+	if err != nil {
+		return
+	}
+	fmt.Println(resp.Choices[0].Text)
+
+	return resp.Choices[0].Text
+
+}
+
 func main() {
+
 	bot, err := linebot.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
@@ -47,7 +69,7 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(resp.Choices[0].Text)).Do(); err != nil {
 						log.Print(err)
 					}
 				case *linebot.StickerMessage:
