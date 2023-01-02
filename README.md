@@ -22,7 +22,7 @@ https://github.com/kkdai/LineBotTemplate
 https://xxx.onrender.com/callback
 
 ------
-You can also see:
-### Line和openai api settings: https://github.com/howarder3/GPT-Linebot-python-flask-on-vercel
+#### Line and OPENAI api settings: 
+https://github.com/howarder3/GPT-Linebot-python-flask-on-vercel
 
 

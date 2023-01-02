@@ -19,5 +19,6 @@ https://github.com/kkdai/LineBotTemplate
 https://xxx.onrender.com/callback
 
 ------
-參考資料：
-### Line和openai api設置請參考： https://github.com/howarder3/GPT-Linebot-python-flask-on-vercel
+#### Line和openai api設置請參考： 
+
+https://github.com/howarder3/GPT-Linebot-python-flask-on-vercel
