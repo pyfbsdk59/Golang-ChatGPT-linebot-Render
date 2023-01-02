@@ -1,17 +1,3 @@
-// Copyright 2016 LINE Corporation
-//
-// LINE Corporation licenses this file to you under the Apache License,
-// version 2.0 (the "License"); you may not use this file except in compliance
-// with the License. You may obtain a copy of the License at:
-//
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-// License for the specific language governing permissions and limitations
-// under the License.
-
 package main
 
 import (
@@ -20,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 	gogpt "github.com/sashabaranov/go-gpt3"
@@ -28,9 +15,16 @@ import (
 func getChatGPTresponse(ctx context.Context, question string) string {
 	c := gogpt.NewClient(os.Getenv("OPENAI_TOKEN"))
 
+	maxtokens, err0 := strconv.Atoi(os.Getenv("OPENAI_MAXTOKENS"))
+
+	if err0 != nil {
+		fmt.Println("Error during conversion")
+		return "MaxTokens Conversion Error happened!"
+	}
+
 	req := gogpt.CompletionRequest{
 		Model:       "text-davinci-003",
-		MaxTokens:   100,
+		MaxTokens:   maxtokens,
 		Prompt:      question,
 		Temperature: 0,
 	}
@@ -69,7 +63,7 @@ func main() {
 		for _, event := range events {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
-				case *linebot.TextMessage:
+				case *linebot.TextMessage: //message.Text refers to the text users typed in; ctx has to be passed down to the function
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(getChatGPTresponse(ctx, message.Text))).Do(); err != nil {
 						log.Print(err)
 					}
